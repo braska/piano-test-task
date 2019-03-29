@@ -3,7 +3,11 @@
 
 require __DIR__.'/../src/bootstrap.php';
 
-use Piano\Application;
+use Piano\Console\Command\RunCommand;
+use Symfony\Component\Console\Application;
 
+$command = new RunCommand();
 $application = new Application();
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
 $application->run();

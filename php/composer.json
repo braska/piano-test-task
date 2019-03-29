@@ -5,7 +5,13 @@
             "Piano\\" : "src/Piano"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Piano\\Tests\\": "tests/Piano"
+        }
+    },
     "require": {
+        "symfony/console": "^4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0"
