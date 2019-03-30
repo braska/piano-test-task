@@ -39,24 +39,25 @@ class Datasets {
             }
 
             foreach($dataset['records'] as $record) {
-                $merge_column_index = $column_index_by_name[$merge_column_name];
+                $merge_value = $record[$merge_column_name];
 
-                $merge_value = $record[$merge_column_index];
+                $other_values = array_values(array_filter($record, function($column_name) use ($merge_column_name) {
+                    if ($merge_column_name !== $column_name) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }, ARRAY_FILTER_USE_KEY));
+
                 if (array_key_exists($merge_value, $record_index_by_merge_value)) {
-
-                 } else {
-                    $records[] = [$merge_value, array_filter($record, function($index) {
-                        if ($merge_column_index !== $index) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }, ARRAY_FILTER_USE_KEY)];
+                    $records[$record_index_by_merge_value[$merge_value]] = array_merge($records[$record_index_by_merge_value[$merge_value]], $other_values);
+                } else {
+                    $records[] = array_merge([$merge_value], $other_values);
                     $record_index_by_merge_value[$merge_value] = count($records) - 1;
                 }
             }
         }
 
-        return ['header' => $header, 'records' => []];
+        return ['header' => $header, 'records' => $records];
     }
 }

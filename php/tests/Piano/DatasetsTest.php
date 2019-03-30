@@ -13,8 +13,8 @@ class DatasetsTest extends TestCase
         // Arrange
         $datasets = new Datasets(
             [
-                ['file' => 'file_a.csv', 'header' => ['user_id', 'email'], 'records' => ['asdasdas', 'a@b.c']],
-                ['file' => 'file_b.csv', 'header' => ['user_id', 'first_name'], 'records' => ['asdasdas', 'Test']],
+                ['file' => 'file_a.csv', 'header' => ['user_id', 'email'], 'records' => [['user_id' => 'asdasdas', 'email' => 'a@b.c']]],
+                ['file' => 'file_b.csv', 'header' => ['user_id', 'first_name'], 'records' => [['user_id' => 'asdasdas', 'first_name' => 'Test']]],
             ]
         );
 
@@ -23,5 +23,6 @@ class DatasetsTest extends TestCase
 
         // Assert
         $this->assertEquals(['user_id', 'email', 'first_name'], $result['header']);
+        $this->assertEquals([['asdasdas', 'a@b.c', 'Test']], $result['records']);
     }
 }
