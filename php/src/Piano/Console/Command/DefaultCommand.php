@@ -21,18 +21,18 @@ class DefaultCommand extends Command
             ->setName('default')
             ->addArgument('files', InputArgument::IS_ARRAY | InputArgument::REQUIRED)
             ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file')
-            ->addOption('key', 'k', InputOption::VALUE_REQUIRED, 'Merge key', 'user_id');
+            ->addOption('column', 'c', InputOption::VALUE_REQUIRED, 'Merge by this column', 'user_id');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $files = $input->getArgument('files');
         $output_file = $input->getOption('output');
-        $merge_key = $input->getOption('key');
+        $merge_column = $input->getOption('column');
 
         $datasets = $this->getDatasets($files);
 
-        $result = $datasets->merge('user_id');
+        $result = $datasets->merge($merge_column);
         $header = $result['header'];
         $records = $result['records'];
 

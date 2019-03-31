@@ -27,7 +27,7 @@ class Datasets {
             $column_index_by_name = [];
 
             if (!in_array($merge_column_name, $dataset['header'])) {
-                throw new \Exception("No \"" . $merge_column_name . "\" key presented in " . $dataset['file']);
+                throw new \Exception("No \"" . $merge_column_name . "\" column presented in " . $dataset['file']);
             }
 
             foreach($dataset['header'] as $index => $column_name) {
