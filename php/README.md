@@ -5,17 +5,18 @@
 # What this app demonstrates?
 
 Knowledge of:
-* PSRs
-* Docker
-* Package Management in PHP (Composer)
-* Testing
-* Code Style
+
+-   PSRs
+-   Docker
+-   Package Management in PHP (Composer)
+-   Testing
+-   Code Style
 
 # What can be improved?
 
-* Dependency Injection
-* Async HTTP requests
-* Multithreading (pthreads)
+-   Dependency Injection
+-   Async HTTP requests
+-   Multithreading (pthreads)
 
 # How to run?
 
@@ -31,7 +32,7 @@ docker run -it --rm --env-file=`pwd`/../.env -v `pwd`/../_data:/tmp/_data piano-
 ## Natively
 
 ```bash
-source ../.env
+export $(cat ../.env | xargs)
 composer i
 ./bin/piano -o results.csv file_a.csv file_b.csv
 ```

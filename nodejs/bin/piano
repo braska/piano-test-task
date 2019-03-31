@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const handler = require('../src/handler');
+
+program
+  .arguments('[files...]')
+  .option('-o, --output <output>', 'Output file')
+  .option('-c, --column [column]', 'Merge by this column', 'user_id')
+  .action((...args) => {
+    try {
+      handler(...args);
+    } catch (error) {
+      console.log(error.message);
+      process.exit(1);
+    }
+  });
+
+program.parse(process.argv);
