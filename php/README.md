@@ -11,6 +11,12 @@ Knowledge of:
 * Testing
 * Code Style
 
+# What can be improved?
+
+* Dependency Injection
+* Async HTTP requests
+* Multithreading (pthreads)
+
 # How to run?
 
 **Before all:** create `.env` in a root dir of project (see `.env.example`).
