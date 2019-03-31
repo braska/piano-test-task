@@ -19,6 +19,11 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url 
 
 WORKDIR /app
 
-COPY . /app
+COPY composer.json .
+COPY composer.lock .
+
+RUN composer install
+
+COPY . .
 
 CMD	["./bin/piano"]

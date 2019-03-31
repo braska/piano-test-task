@@ -14,16 +14,23 @@ class DefaultCommandTest extends TestCase
     {
         // Arrange
         $command = $this->getMockBuilder('Piano\Console\Command\DefaultCommand')
-            ->setMethods(['getDatasets'])
+            ->setMethods(['getDatasets', 'updateUids'])
             ->getMock();
 
         $datasets = $this->createMock(Datasets::class);
-        $datasets->method('merge')
-             ->will($this->returnValue(['header' => ['user_id', 'email', 'first_name'], 'records' => [['asdasdas', 'a@b.c', 'Test']]]));
+        $datasets
+            ->expects($this->once())
+            ->method('merge')
+            ->will($this->returnValue(['header' => ['user_id', 'email', 'first_name'], 'records' => [['someid', 'a@b.c', 'Test']]]));
 
         $command
+            ->expects($this->once())
             ->method('getDatasets')
             ->will($this->returnValue($datasets));
+
+        $command
+            ->expects($this->once())
+            ->method('updateUids');
 
         $commandTester = new CommandTester($command);
 
@@ -33,6 +40,6 @@ class DefaultCommandTest extends TestCase
         $output = $commandTester->getDisplay();
 
         // Assert
-        $this->assertSame("user_id,email,first_name\nasdasdas,a@b.c,Test\n", $output);
+        $this->assertSame("user_id,email,first_name\nsomeid,a@b.c,Test\n", $output);
     }
 }

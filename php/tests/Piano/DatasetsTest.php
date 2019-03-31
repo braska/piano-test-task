@@ -23,6 +23,6 @@ class DatasetsTest extends TestCase
 
         // Assert
         $this->assertEquals(['user_id', 'email', 'first_name'], $result['header']);
-        $this->assertEquals([['asdasdas', 'a@b.c', 'Test']], $result['records']);
+        $this->assertEquals([['user_id' => 'asdasdas', 'email' => 'a@b.c', 'first_name' => 'Test']], $result['records']);
     }
 }

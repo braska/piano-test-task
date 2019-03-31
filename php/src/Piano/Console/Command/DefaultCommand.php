@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Piano\Datasets;
+use Piano\UserRepository;
 
 class DefaultCommand extends Command
 {
@@ -32,12 +33,14 @@ class DefaultCommand extends Command
         $datasets = $this->getDatasets($files);
 
         $result = $datasets->merge('user_id');
+        $header = $result['header'];
+        $records = $result['records'];
+
+        $this->updateUids($records);
 
         $writer = $this->getWriter($output_file);
-
-        $writer->insertOne($result['header']);
-
-        $writer->insertAll($result['records']);
+        $writer->insertOne($header);
+        $writer->insertAll($records);
 
         if ($output_file) {
             $output->writeln('Done!');
@@ -46,7 +49,7 @@ class DefaultCommand extends Command
         }
     }
 
-    public function getDatasets($files)
+    protected function getDatasets($files)
     {
         $datasets = new Datasets();
 
@@ -60,6 +63,14 @@ class DefaultCommand extends Command
         }
 
         return $datasets;
+    }
+
+    protected function updateUids(&$records)
+    {
+        $user_repository = new UserRepository();
+        foreach ($records as &$record) {
+            $user_repository->updateUid($record);
+        }
     }
 
     protected function getWriter($file = null)
