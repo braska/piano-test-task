@@ -8,7 +8,7 @@ class UserRepository {
     protected $service;
 
     public function __construct($service = null) {
-        $this->service = $service ? $service : new PianoApiPublisherUserService();
+        $this->service = $service ?: new PianoApiPublisherUserService();
     }
 
     public function findByEmail($email)
